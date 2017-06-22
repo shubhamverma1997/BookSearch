@@ -1,50 +1,47 @@
 package com.example.android.booksearch;
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ListView;
-
-import java.util.ArrayList;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    public BookAdapter mAdapter;
 
-    public class BooksAsyncTask extends AsyncTask<String,Void,ArrayList<Books>>
-    {
-        @Override
-        protected ArrayList<Books> doInBackground(String... params) {
+    public String URL_PREFIX="https://www.googleapis.com/books/v1/volumes?q=";
 
-            if(params[0]==null||params.length<1)
-                return null;
+    private String mUrlString;
 
-            ArrayList<Books> booksFetched=Utilities.fetchData(params[0]);
-            return booksFetched;
-        }
+    private String mSearchQuery;
 
-        @Override
-        protected void onPostExecute(ArrayList<Books> bookses) {
-            mAdapter.clear();
 
-            if(bookses!=null && !bookses.isEmpty())
-            {
-                mAdapter.addAll(bookses);
-            }
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.book_list);
+        setContentView(R.layout.activity_main);
 
-        new BooksAsyncTask().execute("https://www.googleapis.com/books/v1/volumes?q=flowers");
+        //EditText editText=(EditText) findViewById(R.id.entryField);
+        //editText.setOn
+        Button find=(Button) findViewById(R.id.find);
 
-        ListView listView=(ListView) findViewById(R.id.list);
+        find.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText input=(EditText) findViewById(R.id.entryField);
+                mSearchQuery=input.getText().toString();
+                mUrlString=URL_PREFIX+mSearchQuery+"&maxResults=40";
 
-        mAdapter=new BookAdapter(this,new ArrayList<Books>());
-        listView.setAdapter(mAdapter);
+                Intent result=new Intent(v.getContext(),BooksActivity.class);
+                result.putExtra("Url",mUrlString);
+                startActivity(result);
+            }
+        });
 
 
     }
+
+
 }
