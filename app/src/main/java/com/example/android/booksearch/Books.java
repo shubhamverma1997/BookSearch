@@ -14,16 +14,22 @@ public class Books {
 
     private String mAuthor;
 
-    private float mRating;
+    private double mRating;
 
     private String mLanguage;
 
     private String mCategory;
 
-    public Books(Bitmap img,String name,String author,float rating,String language,String category)
+    public Books(Bitmap img,String name,String author,double rating,String language,String category)
     {
         mimage=img;
-        mName=name;
+        if(name.length()<30)
+            mName=name;
+        else
+        {
+            mName=name.substring(0,27);
+            mName=mName+"...";
+        }
         mAuthor=author;
         mRating=rating;
         mLanguage=language;
@@ -46,7 +52,7 @@ public class Books {
         return mAuthor;
     }
 
-    public float getRating()
+    public double getRating()
     {
         return mRating;
     }

@@ -130,7 +130,7 @@ public class Utilities {
         String imageurl;
         String name;
         String author;
-        float rating;
+        double rating=0;
         String language;
         String category;
 
@@ -153,9 +153,19 @@ public class Utilities {
                 image=getBitmapfromUrl(imageurl);
                 name=volumeInfo.getString("title");
                 author=volumeInfo.getJSONArray("authors").getString(0);
-                rating=volumeInfo.getInt("ratingsCount");
+
+                rating=volumeInfo.optDouble("averageRating");
+
                 language=volumeInfo.getString("language");
-                category=volumeInfo.getJSONArray("categories").getString(0);
+                JSONArray categoryArray=volumeInfo.optJSONArray("categories");
+                if (categoryArray==null)
+                {
+                    category="Unknown";
+                }
+                else
+                {
+                    category=categoryArray.getString(0);
+                }
 
                 books.add(new Books(image,name,author,rating,language,category));
             }

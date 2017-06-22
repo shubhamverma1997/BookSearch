@@ -47,7 +47,14 @@ public class BookAdapter extends ArrayAdapter<Books> {
         authorTextView.setText(variable.getAuthor());
 
         RatingBar rating=(RatingBar) listview.findViewById(R.id.rating);
-        rating.setRating(variable.getRating());
+        rating.setRating((float)variable.getRating());
+
+        if(Double.isNaN(variable.getRating()))
+        {
+            rating.setVisibility(View.GONE);
+            TextView noRating=(TextView) listview.findViewById(R.id.noRating);
+            noRating.setVisibility(View.VISIBLE);
+        }
 
         TextView languageTextView=(TextView) listview.findViewById(R.id.language);
         languageTextView.setText(variable.getLanguage());
