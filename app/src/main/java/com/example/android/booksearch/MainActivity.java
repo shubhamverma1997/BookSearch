@@ -8,8 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity{
 
     public String URL_PREFIX="https://www.googleapis.com/books/v1/volumes?q=";
 
@@ -23,10 +22,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //EditText editText=(EditText) findViewById(R.id.entryField);
-        //editText.setOn
-        Button find=(Button) findViewById(R.id.find);
 
+        Button find=(Button) findViewById(R.id.find);
         find.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,9 +31,11 @@ public class MainActivity extends AppCompatActivity {
                 mSearchQuery=input.getText().toString();
                 mUrlString=URL_PREFIX+mSearchQuery+"&maxResults=40";
 
-                Intent result=new Intent(v.getContext(),BooksActivity.class);
-                result.putExtra("Url",mUrlString);
-                startActivity(result);
+                if(mSearchQuery!=null||mSearchQuery!="") {
+                    Intent result = new Intent(v.getContext(), BooksActivity.class);
+                    result.putExtra("Url", mUrlString);
+                    startActivity(result);
+                }
             }
         });
 
