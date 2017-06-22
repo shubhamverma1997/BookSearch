@@ -148,15 +148,24 @@ public class Utilities {
             {
                 JSONObject itemno=array.getJSONObject(i);
                 JSONObject volumeInfo=itemno.getJSONObject("volumeInfo");
-                JSONObject imageLinks=volumeInfo.getJSONObject("imageLinks");
-                imageurl=imageLinks.getString("thumbnail");
-                image=getBitmapfromUrl(imageurl);
-                name=volumeInfo.getString("title");
-                author=volumeInfo.getJSONArray("authors").getString(0);
+
+                    JSONObject imageLinks=volumeInfo.optJSONObject("imageLinks");
+                    imageurl=imageLinks.optString("thumbnail");
+                    image=getBitmapfromUrl(imageurl);
+
+
+                name=volumeInfo.optString("title");
+
+
+                if(volumeInfo.optJSONArray("authors")!=null)
+                    author=volumeInfo.optJSONArray("authors").getString(0);
+                else
+                    author="Unknown";
 
                 rating=volumeInfo.optDouble("averageRating");
 
-                language=volumeInfo.getString("language");
+                language=volumeInfo.optString("language");
+
                 JSONArray categoryArray=volumeInfo.optJSONArray("categories");
                 if (categoryArray==null)
                 {

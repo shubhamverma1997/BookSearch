@@ -49,14 +49,11 @@ public class BooksActivity extends AppCompatActivity{
         }
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_list);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         mUrl=getIntent().getStringExtra("Url");
 
         new BooksAsyncTask().execute(mUrl);

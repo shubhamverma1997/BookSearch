@@ -30,12 +30,13 @@ public class MainActivity extends AppCompatActivity{
         input.setRawInputType(InputType.TYPE_CLASS_TEXT);
         input.setImeOptions(EditorInfo.IME_ACTION_GO);
 
+
         find.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 mSearchQuery=input.getText().toString();
-                mUrlString=URL_PREFIX+mSearchQuery+"&maxResults=40";
+                mUrlString=URL_PREFIX+format(mSearchQuery)+"&maxResults=40";
 
                 if(mSearchQuery!=null||mSearchQuery!="") {
                     Intent result = new Intent(v.getContext(), BooksActivity.class);
@@ -46,6 +47,23 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
+
+    }
+
+    public String format(String query)
+    {
+        if (query==null)
+            return "";
+        String ret="";
+
+        for (int i=0;i<query.length();i++)
+        {
+            if(query.charAt(i)==32)
+                ret+="+";
+            else
+                ret+=query.charAt(i);
+        }
+        return ret;
     }
 
 
